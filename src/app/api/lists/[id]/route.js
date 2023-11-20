@@ -57,25 +57,31 @@ export async function PUT(request, { params }) {
 }
 
 
+export async function DELETE(request, { params }) {
+    try {
+        const listDeleted = await prisma.list.delete({
+            where: {
+                id: params.id,
+            }
+        });
 
-
-// Importa el middleware de CORS
-import corsMiddleware from './cors';
-
-// Tu función DELETE
-export default async function DELETE(request, { params }) {
-  // Aplica el middleware de CORS
-  await corsMiddleware(request, response);
-
-  try {
-    const listDeleted = await prisma.list.delete({
-      where: {
-        id: params.id,
-      },
-    });
-
-    return NextResponse.json(listDeleted);
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+        return {
+            status: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*', // o especifica tu dominio en lugar de '*'
+                'Access-Control-Allow-Methods': 'DELETE',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(listDeleted),
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ error: error.message }),
+        };
+    }
 }
