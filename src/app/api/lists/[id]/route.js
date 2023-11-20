@@ -59,18 +59,23 @@ export async function PUT(request, { params }) {
 
 
 
+// Importa el middleware de CORS
+import corsMiddleware from './cors';
 
+// Tu función DELETE
+export default async function DELETE(request, { params }) {
+  // Aplica el middleware de CORS
+  await corsMiddleware(request, response);
 
-export async function DELETE (request, {params}){
-    try {
-          const listDeleted = await prisma.list.delete({
-        where:{
-            id: (params.id),
-        }
-    })
-    
-    return NextResponse.json(listDeleted)
-    } catch (error) {
-        return NextResponse.json(error.message)
-    }
+  try {
+    const listDeleted = await prisma.list.delete({
+      where: {
+        id: params.id,
+      },
+    });
+
+    return NextResponse.json(listDeleted);
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
