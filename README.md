@@ -1,6 +1,6 @@
 # Set
 
-¡Bienvenido a DJ Playlist Manager, tu herramienta esencial para crear y editar listas de canciones diseñadas para DJs! Esta aplicación web te permite organizar y personalizar tus playlists, brindando una experiencia única para tus sesiones de DJ.
+¡Bienvenido a SET, tu herramienta esencial para crear y editar listas de canciones diseñadas para DJs! Esta aplicación web te permite organizar y personalizar tus playlists, brindando una experiencia única para tus sesiones de DJ.
 Características Clave
 
     Gestión de Listas de Reproducción: Crea y edita fácilmente listas de reproducción para tus sets de DJ.
@@ -10,7 +10,7 @@ Características Clave
     Interfaz Intuitiva: Diseño limpio y fácil de usar, para que puedas concentrarte en la música, no en la aplicación.
 
 
-![Gif](https://www.flexclip.com/es/share/4537028e909444ce97e5031ce2cec97ccd4ef17.html)
+![Gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjlpaTJoazh4OHhlYTU4ZW1hN2d3M3JmZWlwZ21wcjVmZ3BmZmc1cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ol2r9gg7eyT41JTFCJ/giphy.gif)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
