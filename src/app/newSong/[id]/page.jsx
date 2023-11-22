@@ -16,7 +16,7 @@ const NewSong = ({params}) => {
     
       const onSubmit = async (e) => {
         e.preventDefault();
-        await fetch(`/api/lists/${params.id}`, {
+        await fetch(`src/app/api/lists/${params.id}`, {
           method: "PUT",
           body: JSON.stringify({ name, artist, genero, intensidad }),
           headers: {
@@ -79,7 +79,7 @@ const NewSong = ({params}) => {
         </div>
         <div className="group relative inline-block text-sm font-medium text-black focus:outline-none focus:ring active:text-blue-950 mt-4 me-2 my-2">
           <span className="absolute inset-0 translate-x-0 translate-y-0 bg-blue-950 transition-transform group-hover:translate-y-0.5 group-hover:translate-x-0.5 "></span>
-          <button className="relative block border border-current bg-white px-8 py-3">
+          <button className="relative block border border-current bg-white px-8 py-3 " type='submit'>
             Save
           </button>
         </div>

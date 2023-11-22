@@ -21,7 +21,7 @@ const NewPage = () => {
         },
       });
         router.refresh()
-          router.push("/");
+          router.push("/listas");
   }
 
 

@@ -1,3 +1,17 @@
+# Set
+
+¡Bienvenido a DJ Playlist Manager, tu herramienta esencial para crear y editar listas de canciones diseñadas para DJs! Esta aplicación web te permite organizar y personalizar tus playlists, brindando una experiencia única para tus sesiones de DJ.
+Características Clave
+
+    Gestión de Listas de Reproducción: Crea y edita fácilmente listas de reproducción para tus sets de DJ.
+
+    Atributo de Intensidad: Asigna un atributo de intensidad a cada canción, permitiéndote organizar tu playlist según la energía deseada en tu evento.
+
+    Interfaz Intuitiva: Diseño limpio y fácil de usar, para que puedas concentrarte en la música, no en la aplicación.
+
+
+![Interfaz de DJ Playlist Manager](https://www.flexclip.com/es/share/4537028e909444ce97e5031ce2cec97ccd4ef17.html)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 
 
 const ListCard = ({list}) => {
+  const router = useRouter()
 
   return (
     <div className="group relative block h-60 sm:h-50 lg:h-70 ">
@@ -48,10 +49,11 @@ const ListCard = ({list}) => {
               onClick={async () => {
                 console.log("delete list");
                 console.log(list.id);
-                await fetch(`lists/${list.id}`, {
+                await fetch(`/api/lists/${list.id}`, {
                   method: "DELETE",
                 });
-                ;
+                 router.refresh();
+                 router.push("/listas");
               
               }}  
               >
