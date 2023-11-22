@@ -10,7 +10,7 @@ Características Clave
     Interfaz Intuitiva: Diseño limpio y fácil de usar, para que puedas concentrarte en la música, no en la aplicación.
 
 
-![Interfaz de DJ Playlist Manager](https://www.flexclip.com/es/share/4537028e909444ce97e5031ce2cec97ccd4ef17.html)
+![Gif](https://www.flexclip.com/es/share/4537028e909444ce97e5031ce2cec97ccd4ef17.html)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
