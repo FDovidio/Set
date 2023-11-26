@@ -1,37 +1,61 @@
-'use client'
-import React from 'react'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
+import React from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
+const NewSong = ({ params }) => {
+  const router = useRouter();
 
+  const [name, setName] = useState("");
+  const [artist, setArtist] = useState("");
+  const [genero, setGenero] = useState("");
+  const [intensidad, setIntensidad] = useState("");
 
+  const onSubmit = async (e) => {
+  e.preventDefault();
 
-const NewSong = ({params}) => {
-  const router = useRouter()
-
-     const [name, setName] = useState("");
-     const [artist, setArtist] = useState("");
-     const [genero, setGenero] = useState("");
-    const [intensidad, setIntensidad] = useState("");
-    
-      const onSubmit = async (e) => {
-        e.preventDefault();
-        await fetch(`src/app/api/lists/${params.id}`, {
-          method: "PUT",
-          body: JSON.stringify({ name, artist, genero, intensidad }),
-          headers: {
-            "Content-type": "application/json",
+  try {
+    const response = await fetch(`/api/lists/${params.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        songs: [
+          {
+            name: name,
+            artist: artist ,
+            genero: genero,
+            intensidad: intensidad,
           },
-        });
-        router.refresh();
-        router.push("/listas");
-      };
+        ],
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      // Manejar el caso en que la solicitud no fue exitosa
+      console.error("Error en la solicitud PUT:", response.statusText);
+      // Aquí puedes mostrar un mensaje al usuario indicando el error.
+      return;
+    }
+
+    // Aquí puedes procesar la respuesta del servidor si es necesario.
+
+    router.refresh();
+    router.push(`/list/${params.id}`);
+  } catch (error) {
+    console.error("Error al enviar la solicitud PUT:", error);
+    // Aquí puedes manejar el error de manera adecuada, por ejemplo, mostrar un mensaje al usuario.
+  }
+};
+
+
 
   return (
     <div className="border-2 border-dashed border-white m-4">
-      <form className=" m-2 mx-2 p-1  min-w-lg bg-slate-50  px-5 text-black"
-      onSubmit={onSubmit}
-      >
+      <form
+        className=" m-2 mx-2 p-1  min-w-lg bg-slate-50  px-5 text-black"
+        onSubmit={onSubmit}>
         <h1 className="text-center text-xl font-medium  text-black sm:text-3xl p-6">
           New Song
         </h1>
@@ -41,11 +65,9 @@ const NewSong = ({params}) => {
             type="text"
             id="nombre"
             className="w-full rounded p-3 shadow-xl border-gray-500"
-            placeholder='Enter Name'
+            placeholder="Enter Name"
             onChange={(e) => setName(e.target.value)}
-            required>
-            
-            </input>
+            required></input>
         </div>
         <div className="mt-4 mb-4">
           <label for="artista">Artist:</label>
@@ -53,7 +75,7 @@ const NewSong = ({params}) => {
             type="text"
             id="artista"
             className="w-full rounded p-3 shadow-xl border-gray-500"
-            placeholder='Enter Artist'
+            placeholder="Enter Artist"
             onChange={(e) => setArtist(e.target.value)}
             required></input>
         </div>
@@ -63,7 +85,7 @@ const NewSong = ({params}) => {
             type="text"
             id="genero"
             className="w-full rounded p-3 shadow-xl border-gray-500"
-            placeholder='Enter Gender'
+            placeholder="Enter Gender"
             onChange={(e) => setGenero(e.target.value)}
             required></input>
         </div>
@@ -73,19 +95,21 @@ const NewSong = ({params}) => {
             type="text"
             id="genero"
             className="w-full rounded p-3 shadow-xl border-gray-500"
-            placeholder='Enter Intensity'
-            onChange={(e)=> setIntensidad(e.target.value)}
+            placeholder="Enter Intensity"
+            onChange={(e) => setIntensidad(e.target.value)}
             required></input>
         </div>
         <div className="group relative inline-block text-sm font-medium text-black focus:outline-none focus:ring active:text-blue-950 mt-4 me-2 my-2">
           <span className="absolute inset-0 translate-x-0 translate-y-0 bg-blue-950 transition-transform group-hover:translate-y-0.5 group-hover:translate-x-0.5 "></span>
-          <button className="relative block border border-current bg-white px-8 py-3 " type='submit'>
+          <button
+            className="relative block border border-current bg-white px-8 py-3 "
+            type="submit">
             Save
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
-export default NewSong
+export default NewSong;

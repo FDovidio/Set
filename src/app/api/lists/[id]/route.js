@@ -1,77 +1,80 @@
 import {NextResponse} from 'next/server'
 import {prisma} from '@/libs/prisma'
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
-app.use(cors());
-
-// Resto de tu configuración de servidor
 
 
 
+export async function GET(request, { params }) {
+  try {
+    const listWithSongs = await prisma.list.findUnique({
+      where: {
+        id: Number(params.id),
+      },
+      include: {
+        songs: true,
+      },
+    });
 
+    if (!listWithSongs) {
+      return NextResponse.json({ error: 'Lista no encontrada' }, { status: 404 });
+    }
 
-export async function GET (request, {params}){
-
-    const list = await prisma.list.findMany({
-        where:{
-            id:Number(params.id),
-        }
-    })
-    
-
-    return NextResponse.json(list)
+    return NextResponse.json(listWithSongs);
+  } catch (error) {
+    console.error('Error al obtener la lista y canciones:', error.message);
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
+  }
 }
+
 
 export async function PUT(request, { params }) {
   try {
     const data = await request.json();
     const listId = Number(params.id);
 
-    // Verificar si 'data.songs' es un array
-    if (data.songs && !Array.isArray(data.songs)) {
-      throw new Error('El campo songs debe ser un array.');
-    }
-
-    // Verificar si 'listId' es un número válido
-    if (isNaN(listId)) {
-      throw new Error('El parámetro id debe ser un número válido.');
-    }
-
     const existingList = await prisma.list.findUnique({
       where: { id: listId },
+      include: { songs: true },
     });
 
     if (!existingList) {
       return NextResponse.json({ error: 'Lista no encontrada' }, { status: 404 });
     }
 
-    // Actualizar solo si hay cambios en los datos
+    // Actualizar solo si hay cambios en los datos de la lista
     const updatedListData = {
       user: data.user || existingList.user,
       title: data.title || existingList.title,
       genero: data.genero || existingList.genero,
       description: data.description || existingList.description,
-      songs: data.songs
-        ? {
-            updateMany: data.songs.map((song) => ({
-              data: {
-                name: song.name,
-                artist: song.artist,
-                genero: song.genero,
-                intensidad: song.intensidad,
-              },
-            })),
-          }
-        : {},
     };
 
     const updatedList = await prisma.list.update({
       where: { id: listId },
       data: updatedListData,
-      include: { songs: true },
     });
+
+    // Actualizar canciones si se proporcionan en la solicitud
+    if (data.songs) {
+      const updatedSongs = await prisma.song.createMany({
+        data: data.songs.map((song) => ({
+          name: song.name,
+          artist: song.artist,
+          genero: song.genero,
+          intensidad: song.intensidad,
+          listId: listId,
+        })),
+      
+      });
+
+      updatedList.songs = updatedSongs;
+    }
+
+    // Usar directamente la función `headers` en el objeto de respuesta
+    updatedList.headers = {
+      'Access-Control-Allow-Origin': `http://localhost:3000`,
+      'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      'Access-Control-Allow-Credentials': 'true',
+    };
 
     return NextResponse.json(updatedList);
   } catch (error) {
@@ -79,6 +82,8 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
+
+
 
 
 

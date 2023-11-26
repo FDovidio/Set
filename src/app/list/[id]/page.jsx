@@ -3,18 +3,26 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const List = ({params}) => {
-const [title, setTitle] = useState (undefined)
+const [data, setData] = useState ([])
 const [songs, setSongs] = useState ([])
 
-useEffect(() => {
-      fetch(`/api/lists/${params.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);        
-          setTitle(data[0].title);
-          setSongs(data[0].songs);
-})
-}, [params.id])
+  useEffect(() => {
+    fetch(`/api/lists/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+       
+
+        console.log("Data from API:", data);
+        setData(data);
+        setSongs(data.songs || []); 
+        console.log("Songs from API:", data.songs);
+                console.log("Songs from API:", songs);
+
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [params.id]);
 
   return (
     <>
@@ -23,7 +31,7 @@ useEffect(() => {
           <div className="sm:flex sm:items-center sm:justify-between ">
             <div className="text-center sm:text-left ">
               <h1 className="text-2xl font-bold text-gray sm:text-3xl text-black ">
-                {title}
+                {data.title}
               </h1>
             </div>
           </div>
@@ -38,12 +46,13 @@ useEffect(() => {
           </Link>
         </div>
       </header>
-      {songs ? (
+      {songs.length > 0 ? (
         songs.map((song) => (
           <article
             className="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 m-2"
             key={song.name}>
             <div className="flex items-start sm:gap-8">
+              {song.name}
               <div
                 className="hidden sm:grid sm:h-20 sm:w-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
                 aria-hidden="true">
